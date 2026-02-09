@@ -1,0 +1,1175 @@
+/**
+ * STYLE.CSS - MAIN STYLESHEET
+ * Anime streaming platform UI with glassmorphism design
+ *
+ * Sections:
+ * 1. CSS Variables (Colors, spacing, effects)
+ * 2. Global Styles (Reset, base elements)
+ * 3. Layout (Container, grid, positioning)
+ * 4. Navigation (Header, navbar, search)
+ * 5. Components (Cards, buttons, panels)
+ * 6. Detail Page (Anime information layout)
+ * 7. Player (Video container and controls)
+ * 8. Banners (Featured content)
+ * 9. Theater Mode (Full-screen video)
+ * 10. Responsive Design (Mobile, tablet)
+ */
+
+/**
+ * ============================================================
+ * SECTION 1: CSS VARIABLES & DESIGN TOKENS
+ * ============================================================
+ */
+:root {
+    /* Colors */
+    --primary: #00d2ff;
+    --primary-glow: rgba(0, 210, 255, 0.4);
+    --accent: #ff4757;
+    --text-main: #ffffff;
+    --text-muted: #a0a0a0;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+
+    /* Effects */
+    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    --radius: 16px;
+}
+
+/**
+ * ============================================================
+ * SECTION 2: GLOBAL STYLES & RESET
+ * ============================================================
+ */
+
+
+/* Global reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* Body styling with animated gradient background */
+body {
+    font-family: 'Outfit', sans-serif;
+    color: var(--text-main);
+    font-size: 15px;
+    background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #141e30);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Animated gradient background */
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Fade-in animation for page transitions */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Base element styles */
+a { text-decoration: none; color: inherit; transition: color 0.3s ease; }
+ul { list-style: none; }
+button, input { font-family: inherit; }
+
+/**
+ * ============================================================
+ * SECTION 3: UTILITY & LAYOUT CLASSES
+ * ============================================================
+ */
+
+/* Glassmorphism effect panel */
+.glass-panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    border-radius: var(--radius);
+}
+
+/* Main content container */
+.container {
+    max-width: 1280px;
+    margin: 50px auto 0 auto;
+    padding: 0 20px;
+}
+
+/* Visibility utilities */
+.hidden { display: none; }
+.fade-in { animation: fadeIn 0.5s ease-out; }
+
+/**
+ * ============================================================
+ * SECTION 4: NAVIGATION & HEADER
+ * ============================================================
+ */
+
+/* Sticky header */
+header {
+    position: sticky;
+    top: 20px;
+    z-index: 1000;
+    margin-bottom: 150px;
+}
+
+/* Navigation bar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 25px;
+    margin-top: 10px;
+}
+
+/* Left side of navbar (back button, logo) */
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Back button */
+.back-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
+    color: var(--text-main);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.back-btn:hover {
+    background: var(--primary);
+    color: #000;
+    box-shadow: 0 0 15px var(--primary-glow);
+    border-color: var(--primary);
+}
+.back-btn.hidden { opacity: 0; pointer-events: none; }
+
+/* Logo */
+.logo {
+    font-size: 24px;
+    font-weight: 800;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    text-shadow: 0 0 15px var(--primary-glow);
+}
+
+/* Navigation links */
+.nav-links {
+    display: flex;
+    gap: 30px;
+}
+.nav-links a {
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 1px;
+    position: relative;
+    cursor: pointer;
+}
+.nav-links a.active, .nav-links a:hover {
+    color: var(--text-main);
+}
+.nav-links a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--primary);
+    box-shadow: 0 0 10px var(--primary);
+}
+
+/* Search wrapper and functionality */
+.search-wrapper { position: relative; }
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid var(--glass-border);
+    border-radius: 50px;
+    padding: 8px 20px;
+    transition: 0.3s;
+}
+.search-box:focus-within {
+    border-color: var(--primary);
+    box-shadow: 0 0 15px var(--primary-glow);
+}
+.search-box input {
+    background: transparent;
+    border: none;
+    color: white;
+    width: 200px;
+    margin-right: 10px;
+}
+
+/* Search results dropdown */
+.search-results {
+    position: absolute;
+    top: 120%;
+    right: 0;
+    width: 350px;
+    max-height: 400px;
+    overflow-y: auto;
+    z-index: 2000;
+    display: none;
+    padding: 10px;
+    background-color: #0f0c29;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 10px 50px rgba(0, 0, 0, 0.9);
+    border-radius: 12px;
+}
+
+/* Custom scrollbar for search results */
+.search-results::-webkit-scrollbar { width: 6px; }
+.search-results::-webkit-scrollbar-thumb { background: var(--primary); border-radius: 3px; }
+.search-results::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+
+.search-results.active { display: block; }
+
+/* Individual search result item */
+.search-item {
+    display: flex;
+    gap: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    margin-bottom: 5px;
+}
+.search-item:hover { background: rgba(255, 255, 255, 0.1); }
+.search-item img {
+    width: 50px;
+    height: 70px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+/**
+ * ============================================================
+ * SECTION 5: MAIN CONTENT & GRIDS
+ * ============================================================
+ */
+
+main { min-height: 80vh; }
+
+/* Section title styling */
+.section-title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    padding-left: 15px;
+    border-left: 4px solid var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* Movie grid layout */
+.movie-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+    padding: 10px;
+    content-visibility: auto;
+    contain-intrinsic-size: 1000px;
+}
+
+/* Tablet & small desktop (900px and below) */
+@media (max-width: 900px) {
+    /* Layout adjustments */
+    .detail-content, .player-layout { flex-direction: column; }
+
+    /* Header unsticks on mobile for better space usage */
+    header {
+        position: relative;
+        top: 0;
+        margin-bottom: 30px;
+    }
+
+    /* Navigation stack vertically */
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+    .nav-left {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .nav-links {
+        width: 100%;
+        justify-content: center;
+        gap: 20px;
+        font-size: 14px;
+    }
+
+    /* Full-width search */
+    .search-wrapper,
+    .search-box,
+    .search-box input,
+    .search-results {
+        width: 100%;
+    }
+
+    /* Detail page adjustments */
+    .poster-wrapper {
+        width: 100%;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+    .poster-wrapper img {
+        width: 200px;
+        max-width: 60%;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+    .info-wrapper h1 {
+        font-size: 2rem;
+        text-align: center;
+    }
+    .ep-grid { justify-content: center; }
+
+    /* Player page adjustments */
+    .video-wrapper {
+        position: sticky;
+        top: 0;
+        z-index: 1100;
+        margin-left: -20px;
+        margin-right: -20px;
+        width: calc(100% + 40px);
+        border-radius: 0;
+        border: none;
+        background: #000;
+    }
+    .playlist-sidebar {
+        width: 100%;
+        max-height: 400px;
+    }
+
+    /* Movie grid responsive */
+    .banner-section { grid-template-columns: 1fr; }
+    .movie-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+    .movie-card img { height: 240px; }
+}
+
+/* Mobile phones (480px and below) */
+@media (max-width: 480px) {
+    /* Movie cards */
+    .movie-card img { height: 200px; }
+
+    /* Player controls responsive */
+    .player-controls {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+    .player-controls > div {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .ctrl-btn {
+        font-size: 12px;
+        padding: 8px;
+    }
+
+    /* Hide theater button on small mobile */
+    .theater-btn { display: none; }
+}
+
+/* Movie card component */
+.movie-card {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    will-change: transform;
+}
+.movie-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    border-color: var(--primary);
+}
+.movie-card img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+    aspect-ratio: 2/3;
+}
+
+/* Card overlay with title */
+.card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 20px 15px;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
+}
+.movie-title {
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+/**
+ * ============================================================
+ * SECTION 6: DETAIL PAGE STYLES
+ * ============================================================
+ */
+
+.detail-container {
+    position: relative;
+    overflow: hidden;
+    padding: 40px;
+}
+.detail-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+    filter: blur(40px) brightness(0.4);
+    z-index: 0;
+    transition: 0.5s;
+}
+.detail-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    gap: 40px;
+    width: 100%;
+}
+
+/* Anime poster area */
+.poster-wrapper {
+    width: 300px;
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.poster-wrapper img {
+    width: 100%;
+    border-radius: 12px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Play button */
+.btn-play {
+    background: var(--accent);
+    color: white;
+    padding: 15px;
+    text-align: center;
+    border-radius: 50px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.3s;
+    box-shadow: 0 5px 20px rgba(231, 76, 60, 0.4);
+    border: none;
+    width: 100%;
+    text-transform: uppercase;
+}
+.btn-play:hover {
+    transform: scale(1.05);
+    background: #ff6b81;
+}
+
+/* Anime info (title, description) */
+.info-wrapper { flex: 1; }
+.info-wrapper h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    line-height: 1.1;
+    text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+}
+.info-wrapper p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #e0e0e0;
+    margin-bottom: 30px;
+}
+
+/* Episode list in detail page */
+.ep-list h3 {
+    color: var(--primary);
+    margin-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 10px;
+    display: inline-block;
+}
+.ep-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+.ep-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.2s;
+    font-weight: 500;
+    color: var(--text-main);
+}
+.ep-btn:hover, .ep-btn.active {
+    background: var(--primary);
+    color: #000;
+    font-weight: 700;
+    box-shadow: 0 0 15px var(--primary-glow);
+    border-color: var(--primary);
+}
+
+/**
+ * ============================================================
+ * SECTION 7: VIDEO PLAYER STYLES
+ * ============================================================
+ */
+
+/* Page breadcrumbs */
+.breadcrumbs {
+    margin-bottom: 20px;
+    color: var(--text-muted);
+    font-size: 14px;
+}
+.breadcrumbs span:hover { color: var(--primary); }
+
+/* Player layout (video + sidebar) */
+.player-layout {
+    display: flex;
+    gap: 25px;
+    align-items: flex-start;
+}
+
+/* Video wrapper */
+.video-wrapper {
+    flex: 3;
+    overflow: hidden;
+}
+
+/* Responsive video container (16:9 aspect ratio) */
+.video-frame {
+    width: 100%;
+    padding-top: 56.25%;
+    position: relative;
+    background: #000;
+}
+.video-frame video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    /* Thêm transition để ẩn hiện mượt mà */
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+/* --- LOGIC ẨN VIDEO KHI LOADING (Quan trọng) --- */
+/* Khi video-frame có class "loading" thì video bên trong sẽ ẩn đi */
+.video-frame.loading video {
+    opacity: 0;
+    visibility: hidden;
+}
+
+/* Player control buttons */
+.player-controls {
+    padding: 15px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+.ctrl-btn {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 8px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+    font-size: 13px;
+    border: none;
+    color: var(--text-main);
+}
+.ctrl-btn:hover { background: rgba(255, 255, 255, 0.2); }
+.ctrl-btn.disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Episode playlist sidebar */
+.playlist-sidebar {
+    flex: 1;
+    max-height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+.sidebar-header {
+    padding: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-weight: 700;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.2);
+}
+.sidebar-content {
+    padding: 15px;
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* Focus/light mode overlay */
+#focus-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.95);
+    z-index: 1001;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.4s;
+}
+#focus-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+.player-wrapper.focus-mode {
+    position: relative;
+    z-index: 1002;
+    box-shadow: 0 0 100px var(--primary-glow);
+    border-color: var(--primary);
+}
+
+/**
+ * ============================================================
+ * SECTION 8: BANNERS & FEATURED CONTENT
+ * ============================================================
+ */
+
+/* Banner section grid */
+.banner-section {
+    margin-bottom: 40px;
+    display: grid;
+    /* Sửa số 2 thành số 3 */
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 20px;
+}
+
+/* CSS để Responsive trên Mobile (giữ nguyên hoặc điều chỉnh nếu cần) */
+@media (max-width: 900px) {
+    .banner-section { 
+        /* Trên mobile/tablet quay về 1 cột hoặc 2 cột tùy ý */
+        grid-template-columns: 1fr; 
+    }
+}
+
+/* Hero banner card */
+.hero-banner {
+    position: relative;
+    height: 120px; /* <--- Đã sửa: Giảm chiều cao */
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex;
+    align-items: flex-end;
+    background-size: cover;
+    background-position: center;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4); /* Giảm bóng đổ một chút cho nhẹ */
+    cursor: pointer;
+    transition: 0.3s;
+    border: 0px solid var(--glass-border); /* Sửa 0px thành 1px cho rõ nét hơn */
+}
+
+/* Banner overlay gradient */
+.hero-banner::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(25, 4, 83, 0.616), transparent);
+    z-index: 1;
+    pointer-events: none;
+}
+
+.hero-banner:hover {
+    transform: scale(1.01);
+    border-color: var(--primary);
+}
+
+/* Banner content */
+.hero-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    padding: 10px; /* <--- Đã sửa: Giảm padding */
+}
+.hero-title {
+    font-size: 1.8rem; /* <--- Đã sửa: Chữ nhỏ lại */
+    font-weight: 800;
+    margin-bottom: 5px; /* Giảm khoảng cách dưới */
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+    color: var(--primary);
+    
+    /* Thêm: Giới hạn 1 dòng để không bị tràn nếu tên dài */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.hero-desc {
+    font-size: 0.95rem; /* <--- Đã sửa: Chữ nhỏ lại */
+    color: #ddd;
+    max-width: 100%;
+    line-height: 1.4;
+    
+    /* Thêm: Giới hạn hiển thị tối đa 2 dòng */
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+/* Notification banners */
+.notification-banner {
+    grid-column: 1 / -1;
+    padding: 15px 20px;
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-weight: 500;
+}
+.notification-banner.warning {
+    background: rgba(255, 193, 7, 0.1);
+    border-color: rgba(255, 193, 7, 0.3);
+    color: #ffc107;
+}
+.notification-banner.info {
+    background: rgba(0, 210, 255, 0.1);
+    border-color: rgba(0, 210, 255, 0.3);
+    color: var(--primary);
+}
+
+/**
+ * ============================================================
+ * SECTION 9: THEATER MODE
+ * ============================================================
+ */
+
+/* Theater overlay background */
+#theater-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.85);
+    z-index: 1000;
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.25s;
+}
+#theater-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Theater mode player */
+.player-wrapper.theater {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 92vw;
+    height: 72vh;
+    border-radius: 12px;
+    z-index: 1001;
+    box-shadow: 0 40px 120px rgba(4, 7, 46, 0.8);
+}
+.player-wrapper.theater .video-frame {
+    padding-top: 0;
+    height: calc(100% - 64px);
+}
+.player-wrapper.theater .video-frame video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+}
+.player-wrapper.theater .player-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+}
+.ctrl-btn.theater-btn {
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+    font-size: 14px;
+    margin-top: 50px;
+    border-top: 1px solid var(--glass-border);
+}
+footer p { margin: 5px 0; }
+
+/**
+ * ============================================================
+ * SECTION 10: CUSTOM VIDEO PLAYER (GLASSMORPHISM - NEW IMPLEMENTATION)
+ * ============================================================
+ * 
+ * Modern glassmorphism-styled video player with:
+ * - Custom HTML5 controls (no native browser controls)
+ * - Loading spinner and buffering indicators
+ * - Auto-hiding controls on mouse inactivity
+ * - Volume, seeking, fullscreen, and fit mode controls
+ * - Seamless integration with CustomPlayer.js
+ * 
+ * Note: HTML5 video element has NO "controls" attribute.
+ * All playback control is handled by the custom control UI.
+ */
+
+/* Video frame container with aspect ratio */
+.video-frame {
+    position: relative;
+    width: 100%;
+    padding-top: 56.25%; /* 16:9 aspect ratio */
+    background: #000;
+    overflow: hidden;
+}
+
+/* HTML5 video element styling */
+.video-frame video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Loading spinner container */
+.video-spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: none; /* Mặc định ẩn, JS sẽ thêm class .show */
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    z-index: 25;
+    pointer-events: none;
+}
+
+.video-spinner.show {
+    display: flex;
+}
+
+/* Spinner animation */
+.spinner-ring {
+    width: 50px;
+    height: 50px;
+    border: 4px solid rgba(0, 210, 255, 0.2);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spinRotate 0.8s linear infinite;
+}
+
+@keyframes spinRotate {
+    to { transform: rotate(360deg); }
+}
+
+.spinner-text {
+    color: var(--text-main);
+    font-size: 14px;
+    font-weight: 500;
+}
+
+/* Custom controls container */
+.custom-controls {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+    padding: 30px 15px 15px;
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    pointer-events: auto;
+}
+
+.custom-controls.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Progress bar container */
+.progress-container {
+    position: relative;
+    width: 100%;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    cursor: pointer;
+    margin-bottom: 12px;
+    transition: height 0.2s ease;
+}
+
+.progress-container:hover {
+    height: 8px;
+}
+
+/* Buffered progress bar (light gray) */
+.buffered-progress {
+    position: absolute;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    pointer-events: none;
+}
+
+/* Played progress bar (colored) */
+.played-progress {
+    position: absolute;
+    height: 100%;
+    background: var(--primary);
+    border-radius: 5px;
+    pointer-events: none;
+    box-shadow: 0 0 10px rgba(0, 210, 255, 0.6);
+}
+
+/* Seek bar input */
+.seek-bar {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    appearance: none;
+    background: transparent;
+    z-index: 5;
+}
+
+.seek-bar::-webkit-slider-thumb {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 210, 255, 0.8);
+    transition: transform 0.1s ease;
+}
+
+.seek-bar::-webkit-slider-thumb:hover {
+    transform: scale(1.3);
+    box-shadow: 0 0 15px rgba(0, 210, 255, 1);
+}
+
+.seek-bar::-moz-range-thumb {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 210, 255, 0.8);
+    transition: transform 0.1s ease;
+}
+
+.seek-bar::-moz-range-thumb:hover {
+    transform: scale(1.3);
+    box-shadow: 0 0 15px rgba(0, 210, 255, 1);
+}
+
+/* Controls bottom bar */
+.controls-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Left side controls */
+.controls-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+/* Right side controls */
+.controls-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+
+/* Individual control button styling */
+.control-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--text-main);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.2s ease;
+    flex-shrink: 0;
+}
+
+.control-btn:hover {
+    background: rgba(0, 210, 255, 0.2);
+    border-color: var(--primary);
+    color: var(--primary);
+    box-shadow: 0 0 10px rgba(0, 210, 255, 0.4);
+}
+
+.control-btn:active {
+    transform: scale(0.95);
+}
+
+/* Time display */
+.time-display {
+    color: var(--text-main);
+    font-size: 13px;
+    font-weight: 500;
+    min-width: 70px;
+    letter-spacing: 0.5px;
+}
+
+.time-separator {
+    margin: 0 4px;
+    opacity: 0.7;
+}
+
+/* Volume control group */
+.volume-control {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    position: relative;
+}
+
+/* Volume bar slider */
+.volume-bar {
+    width: 0;
+    height: 4px;
+    border-radius: 2px;
+    appearance: none;
+    background: rgba(255, 255, 255, 0.2);
+    cursor: pointer;
+    transition: width 0.2s ease;
+    opacity: 0;
+}
+
+.volume-control:hover .volume-bar {
+    width: 60px;
+    opacity: 1;
+}
+
+.volume-bar::-webkit-slider-thumb {
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(0, 210, 255, 0.6);
+}
+
+.volume-bar::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--primary);
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 0 8px rgba(0, 210, 255, 0.6);
+}
+
+/* Video overlay with play button */
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.3);
+    opacity: 1;
+    transition: opacity 0.3s ease;
+    z-index: 15;
+    cursor: pointer;
+}
+
+.video-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Play button in center */
+.play-button {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: var(--primary);
+    border: none;
+    color: #000;
+    font-size: 30px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 30px rgba(0, 210, 255, 0.6);
+}
+
+.play-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 40px rgba(0, 210, 255, 0.8);
+}
+
+.play-button:active {
+    transform: scale(0.95);
+}
+
+/**
+ * ============================================================
+ * SECTION 11: RESPONSIVE DESIGN
+ * ============================================================
+ */

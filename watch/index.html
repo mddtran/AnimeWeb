@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Watch - Anime</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../assets/css/style.css">
+    
+    <link rel="icon" href="../assets/img/favico.png" type="image/jpeg">
+    
+
+</head>
+<body>
+    <div id="focus-overlay" onclick="toggleLight()"></div>
+    
+    <div id="theater-overlay" onclick="toggleTheater()"></div>
+    
+    <header class="container">
+        <nav class="glass-panel navbar">
+            <div class="nav-left">
+                <button class="back-btn" id="back-btn" onclick="goBack()" aria-label="Go back">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="logo" onclick="routeHome()">
+                    <i class="material-icons">play_circle_filled</i> Takahashi Datto
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a onclick="routeHome()">Trang Chủ</a></li>
+                <li><a class="active">Xem Phim</a></li>
+            </ul>
+            <div class="search-wrapper">
+                <div class="search-box">
+                    <input id="s-input" placeholder="Tìm kiếm anime..." onkeyup="searchLive(this.value)" autocomplete="off">
+                    <i class="material-icons" style="color:var(--text-muted)">search</i>
+                </div>
+                <div class="glass-panel search-results" id="s-result"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+    <div class="breadcrumbs">
+        <span style="cursor:pointer" onclick="routeHome()">Home</span> / 
+        <span id="w-bread-title" style="cursor:pointer; color:white; transition:color 0.3s ease;" onmouseover="this.style.color='var(--primary)'" onmouseout="this.style.color='white'">Phim</span> / 
+        <span id="w-bread-ep" style="color:var(--primary)">Tập</span>
+    </div>
+
+        <div class="player-layout">
+            <div class="glass-panel video-wrapper player-wrapper" id="player-box">
+                <div class="video-frame"></div>
+                
+                <div class="player-controls">
+                    <div style="display:flex; gap:10px;">
+                        <button class="ctrl-btn" id="btn-prev" title="Previous Episode">
+                            <i class="fas fa-backward"></i>
+                        </button>
+                        <button class="ctrl-btn" id="btn-next" title="Next Episode">
+                            <i class="fas fa-forward"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <aside class="glass-panel playlist-sidebar">
+                <div class="sidebar-header">CHỌN TẬP</div>
+                <div class="sidebar-content ep-grid" id="w-ep-list"></div>
+            </aside>
+        </div>
+    </main>
+
+    <footer>
+        <p>Takahashi Datto - Anime Streaming Project</p>
+        <p>Project powered by NodeJS, CSS and JellyfinAPI, YoutubeURL</p>
+        <p>@all rights reserved - 2026</p>
+    </footer>
+
+    <script src="../assets/js/data.js"></script>
+    <script src="../assets/js/common.js"></script>
+    <script src="../assets/js/custom-player.js"></script>
+    <script src="../assets/js/watch.js"></script>
+</body>
+</html>

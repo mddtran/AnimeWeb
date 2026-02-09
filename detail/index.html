@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Chi tiết - Anime</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../assets/css/style.css">
+    
+    <link rel="icon" href="../assets/img/favico.png" type="image/jpeg">
+</head>
+<body>
+    <div id="focus-overlay" onclick="toggleLight()"></div>
+    
+    <header class="container">
+        <nav class="glass-panel navbar">
+            <div class="nav-left">
+                <button class="back-btn" id="back-btn" onclick="goBack()" aria-label="Go back">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="logo" onclick="routeHome()">
+                    <i class="material-icons">play_circle_filled</i> Takahashi Datto
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li><a onclick="routeHome()">Trang Chủ</a></li>
+                <li><a class="active">Chi Tiết</a></li>
+            </ul>
+            <div class="search-wrapper">
+                <div class="search-box">
+                    <input id="s-input" placeholder="Tìm kiếm anime..." autocomplete="off">
+                    <i class="material-icons" style="color:var(--text-muted)">search</i>
+                </div>
+                <div class="glass-panel search-results" id="s-result"></div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        <section id="p-detail" class="fade-in">
+            <div class="glass-panel detail-container">
+                <div class="detail-bg" id="d-bg"></div>
+                
+                <div class="detail-content">
+                    <aside class="poster-wrapper">
+                        <img id="d-img" src="" alt="Anime Poster">
+                        <button class="btn-play" id="play-btn">
+                            <i class="fas fa-play" style="margin-right:8px;"></i> Xem Ngay
+                        </button>
+                    </aside>
+                    
+                    <article class="info-wrapper">
+                        <h1 id="d-title">Title</h1>
+                        <p id="d-desc">Description goes here...</p>
+                        
+                        <div class="ep-list">
+                            <h3>Danh Sách Tập</h3>
+                            <div class="ep-grid" id="d-ep-list"></div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Takahashi Datto - Anime Streaming Project</p>
+        <p>Project powered by NodeJS, CSS and JellyfinAPI, YoutubeURL</p>
+        <p>@all rights reserved - 2026</p>
+    </footer>
+
+    <script src="../assets/js/data.js"></script>
+    <script src="../assets/js/common.js"></script>
+    <script src="../assets/js/detail.js"></script>
+</body>
+</html>
